@@ -1,21 +1,19 @@
 import express from "express";
+import config from "./config.js"
 import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import * as dotenv from 'dotenv';
 import routes from "./routes/index.js"
-
+import { errorHandler } from "./middlewares/errorhandler.js";
+import { verify } from "./middlewares/headerHandler.js";
 const app = express();
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/api/v1", routes);
-
-dotenv.config()
-const DATABASE_URL = process.env.DATABASE_URL;
-const PORT = process.env.PORT || 8080;
-
-mongoose.connect(DATABASE_URL)
-    .then(() => app.listen(PORT, () => console.log(`Server is runnig on ${PORT}`)))
+// app.use(verify);
+app.use(errorHandler);
+app.use("/api", routes);
+mongoose.connect(config.dbUrl)
+    .then(() => app.listen(config.port, () => console.log(`Server is runnig on ${config.port}`)))
     .catch((error) => console.log(error));
