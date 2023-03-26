@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const leadSchema = mongoose.Schema({
-    leadId: String,
+    leadId: {
+        type: String,
+        unique:true
+    },
     createdDate: {
         type: Date,
         default: new Date()
@@ -14,7 +17,14 @@ const leadSchema = mongoose.Schema({
     lastName: String,
     mobNumber: String,
     emailId: String,
-    jobType: String,
+    jobType: {
+        type: String,
+        enum: {
+          values: ['salaried', 'self-employed'],
+          message: 'jobType {VALUE} is not supported'
+        },
+        required:true
+      },
     reqInterest: Number,
     reqLoanAmount: Number
 });

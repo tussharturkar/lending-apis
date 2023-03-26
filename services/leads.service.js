@@ -14,7 +14,7 @@ export const create=async(data)=> {
         const meta = await leads.create(data);
         return meta;
     } catch (error) {
-      
+        throw new Error(error.message);
     }
 
 }

@@ -8,7 +8,7 @@ export function currentTime() {
     const date = new Date();
     return `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
 }
-export function generateLeadId(prefix) {
+export function generateUniqueId(prefix) {
     const random = Math.round(1000 * Math.random(1000));
     return `${prefix}-${currentDate()}-${random}-${currentTime()}-${random}`;
 }
@@ -34,4 +34,3 @@ export function createHash(string) {
         throw new Error(error);
     }
 }
-

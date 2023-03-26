@@ -1,4 +1,4 @@
-import { error,http } from "../helper/response.service.js";
+import { error,http } from "../helper/response.service.js"
 export const tryCatch = (controller) => async (req, res) => {
     let data ={}
     try {

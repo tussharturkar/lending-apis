@@ -26,14 +26,16 @@ export const http=async(req, data, log = true)=> {
 }
 
 export const error = async (req, err, code = 500) => {
+    console.log(err)
     let payload;
     try {
          payload = {
-            statusCode: code,
+            statusCode:code,
             success: false,
             data: {},
              error: {
-                message: err.message ? err.message : "something went wrong"
+                 message: err.message ? err.message : "something went wrong",
+                //  errorName:err.name
              }
         }
         return payload
