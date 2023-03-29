@@ -7,11 +7,10 @@ export const getEntity = tryCatch(async (req, res) => {
     return entities;
 })
 export const createEntity = tryCatch(async (req, res) => {
-    const entityId = generateUniqueId('EN');
+    const entityId = generateUniqueId(`EN-${req.body.entityCode}`);
     const meta = req.body;
     meta.entityId = entityId
     const createEntity = await create(meta);
-    console.log(req.entity)
     return {
         entityId:createEntity.entityId,
         success: true,

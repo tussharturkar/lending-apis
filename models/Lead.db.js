@@ -1,33 +1,72 @@
 import mongoose from "mongoose";
-
 const leadSchema = mongoose.Schema({
     leadId: {
         type: String,
-        unique:true
+        unique: true,
+        index: true
     },
     createdDate: {
-        type: Date,
-        default: new Date()
+        type: String,
+        default: new Date(),
+        index: true
+    },
+    updatedDate: {
+        type: String,
+        default: new Date(),
+        index: true
+    },
+    entityId: {
+        type: String,
+        index: true
     },
     status: {
         type: String,
-        default: "partial-application"
+        default: "partial-application",
+        index: true
     },
-    firstName: String,
-    lastName: String,
-    mobNumber: String,
-    emailId: String,
+    personalDetails: {
+        firstName: String,
+        lastName: String,
+        mobNumber: String,
+        emailId: String,
+        gender: String,
+
+    },
+    loanDetails: {
+        reqInterest: Number,
+        reqLoanAmount: Number
+    },
     jobType: {
         type: String,
-        enum: {
-          values: ['salaried', 'self-employed'],
-          message: 'jobType {VALUE} is not supported'
+        index: true
+    },
+    kyc: {
+        panCardNo: String
+    },
+    employmentDetails: {
+        monthlyIncome: Number,
+        organizationType: String,
+        organizationVintage: Number,
+        organizationName: String,
+        designation: String,
+        annualIncome: Number,
+    },
+    addressDetails: {
+        currentAddress: {
+            addLine1: String,
+            addLine2: String,
+            city: String,
+            state: String,
+            pincode: String,
         },
-        required:true
-      },
-    reqInterest: Number,
-    reqLoanAmount: Number
+        permanentAddress: {
+            addLine1: String,
+            addLine2: String,
+            city: String,
+            state: String,
+            pincode: String,
+        }
+    }
 });
-
 const Lead = mongoose.model('lead', leadSchema);
 export default Lead;

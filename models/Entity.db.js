@@ -4,7 +4,8 @@ const entitySchema = mongoose.Schema({
     entityId: String,
     createdDate: {
         type: Date,
-        default: new Date()
+        default: new Date(),
+        timestamp:true
     },
     status: {
         type: String,
@@ -20,9 +21,13 @@ const entitySchema = mongoose.Schema({
     },
     entityType: {
         type: String,
+        enum: {
+          values: ['lender', 'partner'],
+          message: 'entity type must be partner or lender'
+        },
         required:true
     },
-    encryptionType: String,
+    authType: String,
     headers: Object
 });
 const Entity = mongoose.model('entity', entitySchema);

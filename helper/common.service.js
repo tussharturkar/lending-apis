@@ -8,9 +8,12 @@ export function currentTime() {
     const date = new Date();
     return `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
 }
+export function currentDateTime() {
+    return `${currentDate()}-${currentTime()}`
+}
 export function generateUniqueId(prefix) {
-    const random = Math.round(1000 * Math.random(1000));
-    return `${prefix}-${currentDate()}-${random}-${currentTime()}-${random}`;
+    const random = Math.round(100000 * Math.random(100000));
+    return `${prefix}-${currentDateTime()}-${random}`;
 }
 
 export function fullName(firstName, lastName, middleName = '') {

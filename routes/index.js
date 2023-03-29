@@ -1,12 +1,13 @@
 import express from "express";
-import { getLeads, postLeadDetails } from "../controllers/Lead.controller.js";
+import { getLeads, createLead } from "../controllers/Lead.controller.js";
 import { getEntity, createEntity } from "../controllers/Entity.controller.js";
 
 const router = express.Router();
 
-router.get("/leads", getLeads);
-router.post("/leads", postLeadDetails);
-router.get("/entity", getEntity);
-router.post("/entity", createEntity);
+router.get("/lead/all-leads", getLeads);
+router.post("/lead/create-lead", createLead);
+router.get("/entity/all-entities", getEntity);
+router.post("/entity/create-entity", createEntity);
+
 export default router;
 

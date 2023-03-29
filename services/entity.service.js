@@ -13,7 +13,7 @@ export const create = async (data) => {
     try {
         const isEntities = await entity.findOne({ entityCode: data.entityCode,entityType:data.entityType});
         if (isEntities) {
-            throw new Error(`entity ${isEntities.entityType} already exist`)
+            throw new Error(`entityExists`)
         } else {
             const meta = await entity.create(data);
             return meta

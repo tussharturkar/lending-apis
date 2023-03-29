@@ -17,21 +17,22 @@ export const sign = async (req, res, next) => {
 export const verify = async (req, res, next) => {
     let token = req.headers.authorization;
     try {
-        if (!token) { throw new Error("authentication failed") }
+        if (!token) { throw new Error("Unauthorized") }
         if (token.startsWith('Bearer')) {
             token = token.split(' ')[1];
         }
         await jwt.verify(token, tokenKey, async function (err, decoded) {
             if (err) {
-                throw new Error("authorization failed")
+                throw new Error("Unauthorized")
             }
             const isEntity = await Entity.findOne(decoded)
-            if(!isEntity){throw new Error("you are not allowed to do this task")}
+            if(!isEntity){throw new Error("Forbidden")}
              req.entity=decoded
         })
         next()
     } catch (err) {
-        const data = await error(req,err,401)
-        res.status(401).json(data)
+        const data = await error(req,err)
+        // res.status(401).json(data)
+        next(data)
     }
 }

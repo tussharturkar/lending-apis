@@ -1,13 +1,19 @@
 import mongoose from "mongoose";
 
 const authSchema = mongoose.Schema({
-    entityId: String,
+    entityId: {
+        type: String,
+        index: true
+    },
     createdDate: {
         type: Date,
         default: new Date()
     },
     entityName: String,
     entityCode: String,
-    encryptionType: String,
-    headers: JSON,
+    encryptionType: {
+        type: String,
+        index: true
+    },
+    headers: Object,
 })

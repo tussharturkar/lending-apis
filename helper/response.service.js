@@ -1,18 +1,21 @@
-import { apiLog } from "../services/apiLog.service.js"
-export const http=async(req, data, log = true)=> {
+import { apiLog } from "../services/apiLog.service.js";
+import errorMessage from "./errorMessages.service.js";
+
+
+export const http = async (req, data, log = true) => {
     let payload;
     try {
-         payload = {
+        payload = {
             statusCode: getStatusCode(req.method),
             success: true,
             data: data,
-            error:{}
+            error: {}
         }
         if (log) {
-            const meta= {
-                method:req.method,
+            const meta = {
+                method: req.method,
                 endPoint: req.route.path,
-                headers:JSON.stringify(req.headers),
+                headers: JSON.stringify(req.headers),
                 req: JSON.stringify(req.body),
                 res: JSON.stringify(payload),
             }
@@ -26,26 +29,26 @@ export const http=async(req, data, log = true)=> {
 }
 
 export const error = async (req, err, code = 500) => {
-    console.log(err)
-    let payload;
-    try {
-         payload = {
-            statusCode:code,
-            success: false,
-            data: {},
-             error: {
-                 message: err.message ? err.message : "something went wrong",
-                //  errorName:err.name
-             }
+    let payload = {
+        statusCode: err ? err.statusCode : code,
+        success: false,
+        data: {},
+        error: {
+            message: ""
         }
-        return payload
-    } catch (error) {
-        throw new Error(error.message);
     }
+    try {
+        const errName = errorMessage[err.message];
+        payload.statusCode = errName ? errName.statusCode : code;
+        payload.error.message = errName ? errName.message : err.message;
+        return payload;
+} catch (error) {
+        throw new Error(error.message);
+}
 }
 
 function getStatusCode(method) {
-    switch(method) {
+    switch (method) {
         case 'GET':
             return 200;
         case 'POST':
